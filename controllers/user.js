@@ -26,24 +26,18 @@ exports.updateUser = (req, res) => {
   });
 };
 
-exports.notify = (req, res) => {
+exports.notify = async (req, res) => {
+  const body = (await User.find({})).map(doc => ({ to: doc.pushToken, title: 'NEW ORDER', body: 'Click to view' }));
+  console.log(body);
   axios
-    .post(
-      'https://exp.host/--/api/v2/push/send',
-      {
-        to: req.profile.pushToken,
-        title: 'NEW ORDER',
-        body: 'Click to view'
-      },
-      {
-        headers: {
-          host: 'exp.host',
-          accept: 'application/json',
-          'accept-encoding': 'gzip, deflate',
-          'content-type': 'application/json'
-        }
+    .post('https://exp.host/--/api/v2/push/send', body, {
+      headers: {
+        host: 'exp.host',
+        accept: 'application/json',
+        'accept-encoding': 'gzip, deflate',
+        'content-type': 'application/json'
       }
-    )
+    })
     .then(function (response) {
       console.log(response.data);
     })

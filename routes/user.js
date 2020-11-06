@@ -7,6 +7,6 @@ const { isSignedIn, isAuthenticated } = require('../controllers/auth');
 router.param('userId', getUserById);
 
 router.put('/user/:userId', isSignedIn, isAuthenticated, updateUser);
-router.post('/notify/:userId', notify);
+router.post('/notify', notify);
 
 module.exports = router;

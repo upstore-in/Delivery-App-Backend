@@ -71,8 +71,8 @@ exports.verifyOTP = (req, res, next) => {
               res.cookie('token', token, { expire: new Date() + 9999 });
 
               // send response to front end
-              const { _id, name, email, role, phoneNumber, shopIds } = user;
-              return res.json({ token, user: { _id, name, email, role, phoneNumber, shopIds } });
+              const { _id, name, phoneNumber, pushToken } = user;
+              return res.json({ token, user: { _id, name, phoneNumber, pushToken } });
             }
           });
         } else if (Details === 'OTP Mismatch') {
